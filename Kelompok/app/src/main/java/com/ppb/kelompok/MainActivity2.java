@@ -16,7 +16,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         WebView webView = findViewById(R.id.web);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://www.google.com");
+        webView.loadUrl("https://www.instagram.com");
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
     }

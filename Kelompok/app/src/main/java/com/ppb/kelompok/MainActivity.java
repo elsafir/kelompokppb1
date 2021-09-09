@@ -1,5 +1,7 @@
 package com.ppb.kelompok;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private CheckBox cbEdu, cbLife, cbTech;
-    private Button btSubmit;
+    private Button btSubmit, btnToWebview;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,16 +57,19 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                 AlertDialog alertDialog = alertDialogBuilder.create();
-                
+
                 alertDialog.show();
         }
-                return true;
-        }
+        return true;
+    }
 
     private void setCheckBoxListener() {
         cbEdu = (CheckBox) findViewById(R.id.cb_education);
         cbLife = (CheckBox) findViewById(R.id.cb_lifestyle);
         cbTech = (CheckBox) findViewById(R.id.cb_technology);
+        btSubmit = (Button) findViewById(R.id.bt_submit);
+        btnToWebview = (Button) findViewById(R.id.btn_webview);
+
         cbEdu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
                             "Anda memilih Education", Toast.LENGTH_LONG).show(); }
             }});
         cbLife.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (((CheckBox) view).isChecked()) {
-                            Toast.makeText(MainActivity.this,
-                                    "Anda memilih Lifestyle", Toast.LENGTH_LONG).show();
-                        }
+            @Override
+            public void onClick(View view) {
+                if (((CheckBox) view).isChecked()) {
+                    Toast.makeText(MainActivity.this,
+                            "Anda memilih Lifestyle", Toast.LENGTH_LONG).show();
+                }
             }
         });
         cbTech.setOnClickListener(new View.OnClickListener() {
@@ -86,4 +91,41 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (((CheckBox) view).isChecked()) {
                     Toast.makeText(MainActivity.this,
-                            "Anda memilih Technology", Toast.LENGTH_LONG).show();}}});}}
+                            "Anda memilih Technology", Toast.LENGTH_LONG).show();}}});
+        btSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String query = "";
+                if (cbEdu.isChecked() && cbLife.isChecked() && cbTech.isChecked()){
+                    query = "education lifestyle technology";
+                }
+                else if (cbEdu.isChecked() && cbLife.isChecked()){
+                    query = "education lifestyle";
+                }
+                else if (cbEdu.isChecked() && cbTech.isChecked()){
+                    query = "education technology";
+                }
+                else if (cbTech.isChecked() && cbLife.isChecked()){
+                    query = "technology lifestyle";
+                }
+                else if (cbLife.isChecked()){
+                    query = "lifestyle";
+                }
+                else if (cbTech.isChecked()){
+                    query = "technology";
+                }
+                else{
+                    query = "education";
+                }
+                Intent dialPhoneIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/results?search_query=" + query));
+                startActivity(dialPhoneIntent);
+            }
+        });
+        btnToWebview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent moveIntent = new Intent(MainActivity.this, MainActivity2.class);
+                startActivity(moveIntent);
+            }
+        });
+    }}

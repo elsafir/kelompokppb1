@@ -54,10 +54,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-                // membuat alert dialog dari builder
                 AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // menampilkan alert dialog
+                
                 alertDialog.show();
         }
                 return true;
